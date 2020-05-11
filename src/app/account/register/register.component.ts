@@ -1,3 +1,4 @@
+import { CommonService } from './../../_services/common.service';
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -19,7 +20,8 @@ export class RegisterComponent implements OnInit {
     private formBuilder: FormBuilder,
     private route: ActivatedRoute,
     private router: Router,
-    private accountService: AccountService
+    private accountService: AccountService,
+    private toast: CommonService
   ) {
     // redirect to home if already logged in
     if (this.accountService.userValue) {
@@ -45,12 +47,12 @@ export class RegisterComponent implements OnInit {
     }
     this.loading = true;
     this.accountService.register(this.form.value).pipe(first()).subscribe(
-      data => {
-        console.log(data);
+      () => {
+        this.toast.showSuccessNotify('Register Success', 'ok ku');
         this.router.navigate(['../login'], { relativeTo: this.route });
       },
       error => {
-        window.alert(error);
+        this.toast.showErrorNotify(error, 'Error');
         this.loading = false;
       });
   }

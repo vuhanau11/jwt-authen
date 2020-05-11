@@ -1,3 +1,4 @@
+import { CommonService } from './../../_services/common.service';
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -21,7 +22,8 @@ export class AddEditComponent implements OnInit {
     private formBuilder: FormBuilder,
     private route: ActivatedRoute,
     private router: Router,
-    private accountService: AccountService
+    private accountService: AccountService,
+    private toast: CommonService
   ) { }
 
   ngOnInit() {
@@ -67,24 +69,24 @@ export class AddEditComponent implements OnInit {
 
   private createUser() {
     this.accountService.register(this.form.value).pipe(first()).subscribe(
-      data => {
-        console.log(data);
+      () => {
+        this.toast.showSuccessNotify('Add Success', 'ok ku');
         this.router.navigate(['.', { relativeTo: this.route }]);
       },
       error => {
-        window.alert(error);
+        this.toast.showErrorNotify(error, 'Error');
         this.loading = false;
       });
   }
 
   private updateUser() {
     this.accountService.update(this.id, this.form.value).pipe(first()).subscribe(
-      data => {
-        console.log(data);
+      () => {
+        this.toast.showSuccessNotify('Edit Success', 'ok ku');
         this.router.navigate(['..', { relativeTo: this.route }]);
       },
       error => {
-        window.alert(error);
+        this.toast.showErrorNotify(error, 'Error');
         this.loading = false;
       });
   }

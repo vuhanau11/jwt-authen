@@ -1,3 +1,4 @@
+import { CommonService } from './../../_services/common.service';
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -20,7 +21,8 @@ export class LoginComponent implements OnInit {
     private formBuilder: FormBuilder,
     private route: ActivatedRoute,
     private router: Router,
-    private accountService: AccountService
+    private accountService: AccountService,
+    private toast: CommonService
   ) {
     // redirect to home if already logged in
     if (this.accountService.userValue) {
@@ -47,12 +49,12 @@ export class LoginComponent implements OnInit {
     this.loading = true;
     this.accountService.login(this.f.username.value, this.f.password.value).pipe(first())
       .subscribe(
-        data => {
-          console.log(data);
+        () => {
+          this.toast.showSuccessNotify('Login Success', 'Welcome');
           this.router.navigate([this.returnUrl]);
         },
         error => {
-          window.alert(error);
+          this.toast.showErrorNotify(error, 'Error');
           this.loading = false;
         });
   }
