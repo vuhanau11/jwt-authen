@@ -1,3 +1,4 @@
+import { CommonService } from './../../_services/common.service';
 import { Component, OnInit } from '@angular/core';
 import { AccountService } from 'src/app/_services/account.service';
 import { first } from 'rxjs/operators';
@@ -10,7 +11,10 @@ import { first } from 'rxjs/operators';
 export class ListUserComponent implements OnInit {
   users = null;
 
-  constructor(private accountService: AccountService) { }
+  constructor(
+    private accountService: AccountService,
+    private toast: CommonService
+  ) { }
 
   ngOnInit() {
     this.accountService.getAll().pipe(first()).subscribe(
@@ -23,6 +27,7 @@ export class ListUserComponent implements OnInit {
     user.isDeleting = true;
     this.accountService.delete(id).pipe(first()).subscribe(() => {
       this.users = this.users.filter(x => x.id !== id);
+      this.toast.showSuccessNotify('Delete Success', 'ok ku');
     });
   }
 }
