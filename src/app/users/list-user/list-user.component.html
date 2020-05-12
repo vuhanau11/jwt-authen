@@ -17,12 +17,18 @@
         <td>{{user.username}}</td>
         <td style="white-space: nowrap">
           <a routerLink="edit/{{user.id}}" class="btn btn-sm btn-primary mr-1">Edit</a>
-          <button (click)="deleteUser(user.id)" class="btn btn-sm btn-danger btn-delete-user"
-            [disabled]="user.isDeleting">
+          <button (click)="openModal(template)" class="btn btn-sm btn-danger btn-delete-user">
             <span *ngIf="user.isDeleting" class="spinner-border spinner-border-sm"></span>
             <span *ngIf="!user.isDeleting">Delete</span>
           </button>
         </td>
+        <ng-template #template>
+          <div class="modal-body text-center">
+            <p>Do you want to delete?</p>
+            <button class="btn btn-danger mr-2" (click)="deleteUser(user.id)" [disabled]="user.isDeleting">Yes</button>
+            <button class="btn btn-primary" (click)="decline()">No</button>
+          </div>
+        </ng-template>
       </tr>
       <tr *ngIf="!users">
         <td colspan="4" class="text-center">
