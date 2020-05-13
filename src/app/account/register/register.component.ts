@@ -12,6 +12,7 @@ import { first } from 'rxjs/operators';
   styleUrls: ['./register.component.scss']
 })
 export class RegisterComponent implements OnInit {
+  fieldTextType = false;
   form: FormGroup;
   loading = false;
   submitted = false;
@@ -55,5 +56,9 @@ export class RegisterComponent implements OnInit {
         this.toast.showErrorNotify(error, 'Error');
         this.loading = false;
       });
+  }
+
+  toggleFieldTextType() {
+    this.fieldTextType = !this.fieldTextType;
   }
 }

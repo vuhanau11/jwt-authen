@@ -12,6 +12,7 @@ import { first } from 'rxjs/operators';
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit {
+  fieldTextType = false;
   loginForm: FormGroup;
   loading = false;
   submitted = false;
@@ -57,5 +58,9 @@ export class LoginComponent implements OnInit {
           this.toast.showErrorNotify(error, 'Error');
           this.loading = false;
         });
+  }
+
+  toggleFieldTextType() {
+    this.fieldTextType = !this.fieldTextType;
   }
 }

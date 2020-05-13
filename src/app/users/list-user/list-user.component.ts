@@ -1,6 +1,8 @@
-import { CommonService } from './../../_services/common.service';
 import { Component, OnInit, TemplateRef } from '@angular/core';
+
+import { CommonService } from './../../_services/common.service';
 import { AccountService } from 'src/app/_services/account.service';
+
 import { first } from 'rxjs/operators';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 
