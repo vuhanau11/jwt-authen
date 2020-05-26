@@ -31,7 +31,7 @@ export class AccountService {
     return this.http.post<User>(`${CONFIG.apiUrl}/users/authenticate`, { username, password })
       .pipe(map(user => {
         // store user details and jwt token in local storage to keep user logged in between page refreshes
-        localStorage.setItem('user', JSON.stringify(user));
+        localStorage.setItem('user', JSON.stringify(user.token));
         this.userSubject.next(user);
         return user;
       }));
@@ -56,16 +56,16 @@ export class AccountService {
   }
 
   update(id, params) {
-    return this.http.put(`${CONFIG.apiUrl}/users/${id}`, params).pipe(map(x => {
+    return this.http.put(`${CONFIG.apiUrl}/users/${id}`, params).pipe(map(info => {
       // update stored user if the logged in user updated their own record
       if (id === this.userValue.id) {
         const user = { ...this.userValue, ...params };
-        localStorage.setItem('user', JSON.stringify(user));
+        localStorage.setItem('user', JSON.stringify(user.token));
 
         // publish updated user to subscribers
         this.userSubject.next(user);
       }
-      return x;
+      return info;
     }));
   }
 

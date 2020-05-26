@@ -4,9 +4,10 @@
   <table class="table table-striped">
     <thead>
       <tr>
-        <th style="width: 30%">First Name</th>
-        <th style="width: 30%">Last Name</th>
-        <th style="width: 30%">Username</th>
+        <th style="width: 20%">First Name</th>
+        <th style="width: 20%">Last Name</th>
+        <th style="width: 20%">Username</th>
+        <th style="width: 20%">Create Date</th>
         <th style="width: 10%"></th>
       </tr>
     </thead>
@@ -15,11 +16,14 @@
         <td>{{user.firstName}}</td>
         <td>{{user.lastName}}</td>
         <td>{{user.username}}</td>
+        <td>{{user.createdDate | date: 'dd/MM/yyyy'}}</td>
         <td style="white-space: nowrap">
-          <a routerLink="edit/{{user.id}}" class="btn btn-sm btn-primary mr-1">Edit</a>
+          <a routerLink="edit/{{user.id}}" class="btn btn-sm btn-primary mr-1">
+            <i class="fa fa-pencil"></i>
+          </a>
           <button (click)="openModal(template)" class="btn btn-sm btn-danger btn-delete-user">
             <span *ngIf="user.isDeleting" class="spinner-border spinner-border-sm"></span>
-            <span *ngIf="!user.isDeleting">Delete</span>
+            <span *ngIf="!user.isDeleting"><i class="fa fa-trash"></i></span>
           </button>
         </td>
         <ng-template #template>
